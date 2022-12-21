@@ -6,8 +6,8 @@ RUN mkdir /run/user && chmod 1777 /run/user
 
 RUN set -eux; \
 	adduser --home /home/rootless -u 100000 rootless; \
-	echo 'rootless:100000:65536' >> /etc/subuid; \
-	echo 'rootless:100000:65536' >> /etc/subgid
+	echo 'rootless:165536:65536' >> /etc/subuid; \
+	echo 'rootless:165536:65536' >> /etc/subgid
 
 RUN set -eux; \
 	\

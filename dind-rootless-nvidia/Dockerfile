@@ -12,4 +12,7 @@ RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 
 RUN apt update && apt install nvidia-container-toolkit -y
 
+RUN sed -i 's/^#root/root/' /etc/nvidia-container-runtime/config.toml
+RUN sed -i 's/^#no-cgroups = false/no-cgroups = true/' /etc/nvidia-container-runtime/config.toml
+
 USER rootless
