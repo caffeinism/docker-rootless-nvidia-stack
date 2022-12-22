@@ -45,3 +45,20 @@ $ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
+## Troubleshooting
+
+### driver is in use
+
+The nvidia-driver container may throw an error like this:
+```
+Unloading NVIDIA driver kernel modules...
+nvidia_uvm           1376256  0
+nvidia_drm             73728  0
+nvidia_modeset       1208320  1 nvidia_drm
+nvidia              56131584  2 nvidia_uvm,nvidia_modeset
+drm_kms_helper        311296  5 drm_vram_helper,ast,nvidia_drm
+drm                   622592  8 drm_kms_helper,drm_vram_helper,ast,nvidia,drm_ttm_helper,nvidia_drm,ttm
+Could not unload NVIDIA driver kernel modules, driver is in use
+````
+
+This is due to the nvidia driver being used somewhere. This also includes commands such as nvidia-smi to disable nvidia-related tools on the host.
