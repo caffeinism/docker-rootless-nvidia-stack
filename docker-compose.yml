@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  nvidia-driver:
+    image: "nvcr.io/nvidia/driver:525.60.13-ubuntu22.04"
+    volumes:
+    - /run/nvidia:/run/nvidia:shared
+    privileged: true
+    pid: host
+  dind-rootless:
+    image: "caffeinism/docker-dind-rootless-nvidia:ubuntu"
+    volumes:
+    - /run/nvidia:/run/nvidia:shared
+    privileged: true
+    pid: host
+    environment:
+    - DOCKER_TLS_CERTDIR=''
+    depends_on:
+    - nvidia-driver
