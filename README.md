@@ -60,5 +60,14 @@ drm_kms_helper        311296  5 drm_vram_helper,ast,nvidia_drm
 drm                   622592  8 drm_kms_helper,drm_vram_helper,ast,nvidia,drm_ttm_helper,nvidia_drm,ttm
 Could not unload NVIDIA driver kernel modules, driver is in use
 ````
+This is because the nvidia device is being used somewhere. (This includes drivers, nvidia-smi or nvidia persistence daemon, etc.) To clear all nvidia related packages and unload modules from the host, consider the following commands
 
-This is due to the nvidia driver being used somewhere. This also includes commands such as nvidia-smi to disable nvidia-related tools on the host.
+```
+sudo apt-get remove --purge '^nvidia-.*'
+sudo modprobe -r nvidia_uvm
+sudo modprobe -r nvidia_drm
+sudo modprobe -r nvidia_modeset
+sudo modprobe -r nvidia
+```
+
+If you still get an error that the same module is being used, it is recommended to reboot.
