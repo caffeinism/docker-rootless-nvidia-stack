@@ -30,15 +30,21 @@ RUN set -eux; \
 		--directory /usr/local/bin/ \
 		'docker-rootless-extras/rootlesskit' \
 		'docker-rootless-extras/rootlesskit-docker-proxy' \
+		'docker-rootless-extras/dockerd-rootless.sh' \
 		'docker-rootless-extras/vpnkit' \
 	; \
 	rm rootless.tgz; \
+	wget -O slirp4netns https://github.com/rootless-containers/slirp4netns/releases/download/v1.2.0/slirp4netns-$(uname -m); \
+	chmod +x slirp4netns; \
+	mv slirp4netns /usr/local/bin/slirp4netns; \
 	\
 	rootlesskit --version; \
-	vpnkit --version
+	slirp4netns --version
 
 RUN set -eux; \
 	mkdir -p /home/rootless/.local/share/docker; \
 	chown -R rootless:rootless /home/rootless/.local/share/docker
 VOLUME /home/rootless/.local/share/docker
+
+COPY dockerd-entrypoint.sh /usr/local/bin/
 USER rootless
